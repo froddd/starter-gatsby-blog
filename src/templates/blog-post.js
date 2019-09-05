@@ -1,12 +1,15 @@
 import React from "react";
+import get from "lodash/get";
+import GatsbyLink from "gatsby-link";
 
-const BlogPostTemplate = props => {
-  const post = get(this.props, "data.contentfulBlogPost");
+const BlogPostTemplate = ({ data }) => {
+  const post = get(data, "contentfulBlogPost");
 
   return (
     <div>
-      <h1>Blog post: {post.title}</h1>
+      <h1>{post.title}</h1>
       <pre>{JSON.stringify(post, null, 2)}</pre>
+      <GatsbyLink to="/">Go back</GatsbyLink>
     </div>
   );
 };
@@ -18,6 +21,9 @@ export const pageQuery = graphql`
     contentfulBlogPost(slug: { eq: $slug }) {
       title
       slug
+      author {
+        name
+      }
     }
   }
 `;
